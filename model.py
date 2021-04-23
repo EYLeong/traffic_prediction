@@ -38,16 +38,17 @@ class Stgcn_Block(nn.Module):
         
     def forward(self, x, adj_hat):
         # First temporal Block
-        temporal_block1 = self.temporal_layer1(x)
+        temporal_block1 = self.temporal_layer1(x) #temporal_block1.shape = batch_size, num_nodes, input_timesteps -1, out_channels
         
         #Spatial Graph Convolution
+        #n = batch_size, h = nodes_num, w = input_timesteps -1, c = out_channels
         t = temporal_block1.permute(1,0,2,3) #Converts tensor from nhwc to hnwc for multiplication with adj_matrix
         t = t.type(torch.cuda.DoubleTensor)
-        gconv1 = torch.einsum("ij, jklm -> kilm", [adj_hat, t]) #(h,h) * (h,n,w,c) -> (n,h,w,c)
-        gconv2 = F.relu(torch.matmul(gconv1, self.weight.double()))
+        gconv1 = torch.einsum("ij, jklm -> kilm", [adj_hat, t]) #(h,h) * (h,n,w,c) -> (n,h,w,c) 
+        gconv2 = F.relu(torch.matmul(gconv1, self.weight.double())) #gconv2.shape = n,h,w,c* where c* = spatial_channels
         
         #Second Temporal Block
-        temporal_block2 = self.temporal_layer2(gconv2) 
+        temporal_block2 = self.temporal_layer2(gconv2) #temporal_block2.shape = batch_size, num_nodes, input_timesteps -2, out_channels
         
         out = self.batch_norm(temporal_block2)
         return out
@@ -63,15 +64,34 @@ class Stgcn_Model(nn.Module):
         
         self.temporal_layer = Temporal_Layer(in_channels = 64, out_channels = 64, kernel = 2)
         self.fc = nn.Conv2d(64, num_output, kernel_size = (1,1))
+        self.adaptive_pool = nn.AdaptiveAvgPool2d((53,1))
 
     def forward(self, adj_hat, x):
-        out1 = self.stgcn_block1(x, adj_hat)
+        #x.shape = batch_size, num_nodes, input_timesteps, features_num
+        
+        out1 = self.stgcn_block1(x, adj_hat) 
+        #out1.shape = batch_size, num_nodes, input_timesteps - 2, out_channels 
+        
         out2 = self.stgcn_block2(out1, adj_hat)
-        out3 = self.temporal_layer(out2) #out3.shape = 12,53,1,64
-        #reshaped to torch.Size([12, 64, 53, 1]) of format batchsize, in_channels, height (num_nodes), width to match pytorch conv2d input
+        #out2.shape = batch_size, num_nodes, input_timesteps -4, out_channels
+            
+        out3 = self.temporal_layer(out2)
+        #out3.shape = batch_size, num_nodes, input_timesteps -5, out_channels
+        
+        #reshaped to format of batchsize, out_channels, height (num_nodes), width (input_timesteps -5) to match pytorch conv2d input
         out3_temp = out3.reshape((out3.shape[0], out3.shape[3], out3.shape[1], out3.shape[2]))
-        out4 = self.fc(out3_temp) #out4.shape = 12,2,53,1 where 2 = num_output
-        out5 = torch.squeeze(out4) #Remove the last dimension of size 1
-        out6 = out5.reshape((out5.shape[0], out5.shape[2], out5.shape[1])) #Reshape into 12,53,2 to match our y target shape
-        return out6
+        
+        out4 = self.fc(out3_temp) 
+        #out4.shape = 12,num_output,53,w where w = input_timesteps - 5
+        
+        out5 = self.adaptive_pool(out4)
+        #out5.shape = 12, num_output, 53, 1
+        
+        out6 = torch.squeeze(out5)
+        #Remove the last dimension of size 1
+        
+        out7 = out6.reshape((out6.shape[0], out6.shape[2], out6.shape[1]))
+        #Reshape into 12,53,2 to match our y target shape
+        
+        return out7
     
