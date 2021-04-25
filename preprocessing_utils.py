@@ -25,30 +25,31 @@ def processed(files_dir, process_dir, overwrite=False):
     dataset_path = os.path.join(process_dir, "dataset.npy")
     adj_path = os.path.join(process_dir, "adj.npy")
     metadata_path = os.path.join(process_dir, "metadata.json")
+    cat2index_path = os.path.join(process_dir, "cat2index.json")
     
     if (not overwrite and
             (os.path.isfile(dataset_path)
             and os.path.isfile(adj_path)
-            and os.path.isfile(metadata_path))):
+            and os.path.isfile(metadata_path)
+            and os.path.isfile(cat2index_path)
+            )
+       ):
         # do not run the function if both overwrite is false and all processed files already exist
         return
     
     file_paths = get_ordered_file_path(files_dir)
     
+    A, metadata, cat2index = get_adjacency(file_paths[0])
+    
     X = []
-    road_cat2index = {}
     
     for data_file_path in file_paths:
         print(f"Processing {data_file_path}")
-        features,_,RoadCat2Index = get_features(data_file_path)
+        features = get_features(data_file_path, metadata, cat2index)
         
-        for k in RoadCat2Index.keys():
-            if k not in road_cat2index:
-                road_cat2index[k] = RoadCat2Index[k]
         X.append(features)
         
     X = np.transpose(X, (1,2,0)) # (num_vertices, num_features, num_timesteps)
-    A = get_adjacency(file_paths[0])
 
     # save both
     np.save(dataset_path, X)
@@ -56,7 +57,10 @@ def processed(files_dir, process_dir, overwrite=False):
     
     # save metadata
     with open(metadata_path, 'w') as outfile:
-        json.dump(road_cat2index, outfile)
+        json.dump(metadata, outfile, sort_keys=True, indent=4)
+    
+    with open(cat2index_path, 'w') as outfile:
+        json.dump(cat2index, outfile, sort_keys=True, indent=4)
     
     print("Done")
 
@@ -70,12 +74,14 @@ def load(process_dir):
         npy: Adjacency matrix
         npy: Feature matrix
         dict: Metadata
+        dict: cat2index
         npy: means 
         npy: stds
     '''
     dataset_path = os.path.join(process_dir, "dataset.npy")
     adj_path = os.path.join(process_dir, "adj.npy")
     metadata_path = os.path.join(process_dir, "metadata.json")
+    cat2index_path = os.path.join(process_dir, "cat2index.json")
 
     A = np.load(adj_path)
     X = np.load(dataset_path)
@@ -84,13 +90,16 @@ def load(process_dir):
     with open(metadata_path) as json_file:
         metadata = json.load(json_file)
         
+    with open(cat2index_path) as json_file:
+        cat2index = json.load(json_file)
+        
     # Normalization using Z-score method
     means = np.mean(X, axis=(0, 2))
     X = X - means.reshape(1, -1, 1)
     stds = np.std(X, axis=(0, 2))
     X = X / stds.reshape(1, -1, 1)
 
-    return A, X, metadata, means, stds
+    return A, X, metadata, cat2index, means, stds
 
 def denormalize(X, stds, means):
     return X * stds.reshape(1, -1, 1) + means.reshape(1, -1, 1)
@@ -136,38 +145,54 @@ def generate_dataset(X, num_timesteps_input, num_timesteps_output):
 
     return torch.from_numpy(np.array(features)), \
            torch.from_numpy(np.array(target))
+
 def get_adjacency(file_path):
     '''
-    Generates an Adjacency matrix
+    Generates the Adjacency matrix of the road network, together with other metadata
     -----------------------------
     :param str file_path: the file path of the dataset
     -----------------------------
     :returns:
         npy: Adjacency matrix
+        dict: Metadata (which index in the adjacency matrix corresponds to which road)
+        dict: Road category to integer for use as feature
     '''
     with open(file_path, 'r') as traffic_data_file:
         traffic_records = json.load(traffic_data_file)
     
-    # Format traffic_records so we can get the start & end location positions of the link
+    # Get start, end, length, and find all road categories
     traffic_records_formatted = []
+    roadcategory_list = []
     for record in traffic_records:
         record = deepcopy(record)
         lat_long_positions = record['Location'].split()
         record['start_pos'] = ' '. join(lat_long_positions[0:2])
         record['end_pos'] = ' '. join(lat_long_positions[2:4])
+        record['length'] = link_length(record['start_pos'], record['end_pos'])
+        
+        if record['RoadCategory'] not in roadcategory_list:
+            roadcategory_list.append(record['RoadCategory'])
+        
         traffic_records_formatted.append(record)
+        
     traffic_records_formatted.sort(key=lambda x: int(x.get('LinkID')))
+    roadcategory_list.sort()
+    RoadCat2Index = {}
+    for i, cat in enumerate(roadcategory_list):
+        RoadCat2Index[cat] = i
     
-    # Generate Node Mappings
+    # Generate Metadata
     nodes_params_dict = {}
-    Nodes2LinkID = {} # not needed
-    LinkID2Nodes = {} # not needed
     for i, record in enumerate(traffic_records_formatted):
         record = deepcopy(record)
-        Nodes2LinkID[i] = record['LinkID']
-        LinkID2Nodes[record['LinkID']] = i
-        nodes_params_dict[i] = record
-    
+        new_record = {} # Only keep parameters that don't change with time
+        new_record["LinkID"] = record["LinkID"]
+        new_record["RoadCategory"] = record["RoadCategory"]
+        new_record["RoadName"] = record["RoadName"]
+        new_record["start_pos"] = record["start_pos"]
+        new_record["end_pos"] = record["end_pos"]
+        new_record["length"] = record["length"]
+        nodes_params_dict[i] = new_record
     
     # Generating a Directed Adjacency matrix
     '''
@@ -187,7 +212,7 @@ def get_adjacency(file_path):
             if i_record['end_pos'] == j_record['start_pos']:
                 # print(f'Found a Directed Edge from Node {i} to Node {j}')
                 A[i,j] = 1
-    return A
+    return A, nodes_params_dict, RoadCat2Index
 
 def link_length(start_pos, end_pos):
     """
@@ -211,7 +236,7 @@ def link_length(start_pos, end_pos):
     return d
 
 
-def get_features(file_path):
+def get_features(file_path, metadata, cat2index):
     '''
     Generates a Feature matrix
     Note: Feature Matrix, X, would contain the output speedband as well. 
@@ -220,73 +245,23 @@ def get_features(file_path):
     -----------------------------
     :returns:
         npy: Feature matrix
-        dict: Metadata of parameters
     '''
-    with open(file_path, 'r') as traffic_data_file:
-        traffic_records = json.load(traffic_data_file)
-    
-    # Find out all Road Categories
-    roadcategory_list = []
-    for record in traffic_records:
-        if record['RoadCategory'] not in roadcategory_list:
-            roadcategory_list.append(record['RoadCategory'])
-    roadcategory_list.sort()
-    Index2RoadCat = {}
-    RoadCat2Index = {}
-    for i, cat in enumerate(roadcategory_list):
-        Index2RoadCat[i] = cat
-        RoadCat2Index[cat] = i
-
-    
-    # Format traffic_records to include additional field on length of link
-    traffic_records_formatted = []
-    for record in traffic_records:
-        record = deepcopy(record)
-        lat_long_positions = record['Location'].split()
-        record['start_pos'] = ' '. join(lat_long_positions[0:2])
-        record['end_pos'] = ' '. join(lat_long_positions[2:4])
-        record['length'] = link_length(record['start_pos'], record['end_pos'])
-        traffic_records_formatted.append(record)
-    
-    # Generate Node Mappings
-    nodes_params_dict = {}
-    Nodes2LinkID = {} # not needed
-    LinkID2Nodes = {} # not needed
-    for i, record in enumerate(traffic_records_formatted):
-        record = deepcopy(record)
-        Nodes2LinkID[i] = record['LinkID']
-        LinkID2Nodes[record['LinkID']] = i
-        nodes_params_dict[i] = record
         
-    nodes_count = len(nodes_params_dict)
-    num_features = 3
     X = []
     # Positions of Features
     # 0. SpeedBand
     # 1. RoadCategory
     # 2. Length of Link
-    for i, record in nodes_params_dict.items():
-        features = [float(record['SpeedBand']),RoadCat2Index[record['RoadCategory']],record['length'] ]
+    
+    with open(file_path, 'r') as traffic_data_file:
+        traffic_records = json.load(traffic_data_file)
+        
+    traffic_records.sort(key=lambda x: int(x.get('LinkID')))
+    for i, record in enumerate(traffic_records):
+        features = [record['SpeedBand'],cat2index[record['RoadCategory']],metadata[i]['length']]
         X.append(features)
-#         X[i][0] = float(record['SpeedBand'])
-#         X[i][1] = RoadCat2Index[record['RoadCategory']]
-#         X[i][2] = record['length']
     
-    
-    return np.array(X), nodes_params_dict, RoadCat2Index
-
-# assuming the sequence of each dataset is the same
-def retrieve_traffics(PATH, columns=["SpeedBand"]):
-    result = []
-    with open(PATH) as json_file:
-        data = json.load(json_file)
-        for road in data:
-            props = []
-            for col in columns:
-                p = road[col]
-                props.append(p)
-            result.append(props)
-    return np.array(result)
+    return np.array(X)
 
 # sort the directories by dates
 def get_dates(dir_name):
@@ -296,7 +271,7 @@ def get_dates(dir_name):
 
 # sorted(os.listdir(raw_trunc_dir), key=get_dates)
 def get_day_time(file_name):
-    date_str_format = "%H_%M_%S"
+    date_str_format = "%H:%M:%S"
     my_date = datetime.strptime(file_name, date_str_format)
     return my_date
 

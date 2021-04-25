@@ -7,19 +7,11 @@ from torch import optim, nn
 
 import model
 
-def predict(stgcn, x_input, batch_size, adj_mat):
-    num_samples = x_input.shape[0]
-    results = []
-    for i in range(math.ceil(num_samples/batch_size)):
-        start = i * batch_size
-        test_input = x_input[start: start+batch_size]
-        if test_input.shape[0] % batch_size != 0:
-            continue
-        with torch.no_grad():
-            stgcn.eval()
-            out = stgcn(adj_mat, test_input)
-            results.append(out)
-    return results
+def predict(stgcn, x_input, adj_mat):
+    with torch.no_grad():
+        stgcn.eval()
+        out = stgcn(adj_mat, x_input)
+    return out
 
 def validate(stgcn, loss_criterion, val_input, val_target, adj_mat, batch_size, device):
     num_samples = val_input.shape[0]
@@ -32,10 +24,6 @@ def validate(stgcn, loss_criterion, val_input, val_target, adj_mat, batch_size, 
     for i in range(math.ceil(num_samples / batch_size)):
         start = i * batch_size
         batch = shuffled_order[start:start+batch_size]
-        
-        #Drop left-overs
-        if len(batch) % batch_size != 0:
-            continue
         
         val_input_batch = val_input[batch].to(device = device)
         val_target_batch = val_target[batch].to(device = device)

@@ -53,7 +53,7 @@ class Stgcn_Block(nn.Module):
         out = self.batch_norm(temporal_block2)
         return out
 
-class Stgcn_Model(nn.Module):
+class Stgcn_Model_Conv(nn.Module):
     def __init__(self, nodes_num, features_num, input_timesteps, num_output):
         super(Stgcn_Model, self).__init__()
         self.stgcn_block1 = Stgcn_Block(in_channels = features_num, spatial_channels = 16, out_channels = 64,
@@ -94,4 +94,34 @@ class Stgcn_Model(nn.Module):
         #Reshape into 12,53,2 to match our y target shape
         
         return out7
+
+class Stgcn_Model(nn.Module):
+    def __init__(self, nodes_num, features_num, input_timesteps, num_output):
+        super(Stgcn_Model, self).__init__()
+        self.stgcn_block1 = Stgcn_Block(in_channels = features_num, spatial_channels = 16, out_channels = 64,
+                                       nodes_num = nodes_num)
+        
+        self.stgcn_block2 = Stgcn_Block(in_channels = 64, spatial_channels = 16,  out_channels = 64,
+                                       nodes_num = nodes_num)
+        
+        self.temporal_layer = Temporal_Layer(in_channels = 64, out_channels = 64, kernel = 2)
+        self.fc = nn.Linear((input_timesteps - 5) * 64, num_output)
+
+    def forward(self, adj_hat, x):
+        #x.shape = batch_size, num_nodes, input_timesteps, features_num
+        
+        out1 = self.stgcn_block1(x, adj_hat) 
+        #out1.shape = batch_size, num_nodes, input_timesteps - 2, out_channels 
+        
+        out2 = self.stgcn_block2(out1, adj_hat)
+        #out2.shape = batch_size, num_nodes, input_timesteps -4, out_channels
+            
+        out3 = self.temporal_layer(out2)
+        #out3.shape = batch_size, num_nodes, input_timesteps -5, out_channels
+        
+        out3_reshaped = out3.reshape(out3.shape[0], out3.shape[1], -1)
+        
+        out4 = self.fc(out3_reshaped)
+        
+        return out4
     
