@@ -1,6 +1,7 @@
+-f https://download.pytorch.org/whl/torch_stable.html
 streamlit==0.80.0
-matplotlib
-numpy
-pandas
-https://download.pytorch.org/whl/cpu/torch-1.1.0-cp36-cp36m-linux_x86_64.whl
+torch==1.8.1+cpu
+torchvision==0.9.1+cpu
+torchaudio==0.8.1
+
 
