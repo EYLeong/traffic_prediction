@@ -11,7 +11,7 @@ class Temporal_Layer(nn.Module):
         self.conv2 = nn.Conv2d(in_channels, out_channels, (1, kernel))
         
     def forward(self, x):
-        x = x.permute(0,3,1,2).type(torch.cuda.FloatTensor)
+        x = x.permute(0,3,1,2).type(torch.FloatTensor)
         normal = self.conv1(x)
         sig = torch.sigmoid(self.conv2(x))
         out = normal * sig
@@ -43,7 +43,7 @@ class Stgcn_Block(nn.Module):
         #Spatial Graph Convolution
         #n = batch_size, h = nodes_num, w = input_timesteps -1, c = out_channels
         t = temporal_block1.permute(1,0,2,3) #Converts tensor from nhwc to hnwc for multiplication with adj_matrix
-        t = t.type(torch.cuda.DoubleTensor)
+        t = t.type(torch.DoubleTensor)
         gconv1 = torch.einsum("ij, jklm -> kilm", [adj_hat, t]) #(h,h) * (h,n,w,c) -> (n,h,w,c) 
         gconv2 = F.relu(torch.matmul(gconv1, self.weight.double())) #gconv2.shape = n,h,w,c* where c* = spatial_channels
         

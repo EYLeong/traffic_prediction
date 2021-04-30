@@ -61,7 +61,7 @@ def save_model(model, optimizer):
     f.close()
     print(f"Model has been saved to path : {path}")
     
-def load_model(path=None):
+def load_model(path=None, map_location=None):
     
     if path == None:
         with open("./saved_models/last_saved_model.txt") as f:
@@ -69,7 +69,7 @@ def load_model(path=None):
     
     print(f"Loading model in path : {path}")
     
-    checkpoint = torch.load(path)
+    checkpoint = torch.load(path, map_location=map_location)
     model_stgcn = model.Stgcn_Model(checkpoint['model_nodes_num'], checkpoint['model_features_num'], checkpoint['model_input_timesteps'], checkpoint['model_num_output'])
     model_stgcn.load_state_dict(checkpoint['state_dict'])
     optimizer = optim.Adam(model_stgcn.parameters(), lr=checkpoint['model_lr'])
