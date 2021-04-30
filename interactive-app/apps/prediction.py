@@ -1,5 +1,5 @@
 import streamlit as st
-from utils.prediction import calculate
+from utils.prediction import calculate, predict
 from components.buttons import download_local_button
 import datetime
 import pandas as pd
@@ -38,12 +38,12 @@ def app():
 Click to download\
         </a>'
     st.markdown(download_href, unsafe_allow_html=True)
-    sample_zip_path = os.path.join(current_dir, 'data', 'sample', 'pred_data.zip') # os.getcwd()
+    sample_zip_path = os.path.join(current_dir, 'data', 'sample', 'input.zip')
     st.write(sample_zip_path)
     st.write(os.getcwd())
     st.write(d)
     st.write(dd)
-    download_local_button(sample_zip_path, 'pred_data.zip', 'Download sample files')
+    download_local_button(sample_zip_path, 'input.zip', 'Download sample input files')
 
     zip_file = st.file_uploader("Upload file", type="zip")
     if zip_file is not None:
@@ -51,16 +51,16 @@ Click to download\
         st.write(file_details)
 
         # Saving File
-        saved_zip_path = os.path.join('data', zip_file.name)
+        saved_zip_path = os.path.join(current_dir, 'data', zip_file.name)
         with open(saved_zip_path, 'wb') as f:
             f.write(zip_file.getbuffer())
-            st.write(saved_zip_path)
+
         with ZipFile(saved_zip_path, 'r') as zip:
             # printing all the contents of the zip file
             zip.printdir()
             # extracting all the files
             print('Extracting all the files now...')
-            unzip_path = os.path.join('data', 'raw')
+            unzip_path = os.path.join(current_dir, 'data', 'raw')
             zip.extractall(path=unzip_path)
             print('Done!')
 
@@ -101,7 +101,8 @@ Click to download\
 
     if st.button("Classify", key='classify'):
         with st.spinner("Please wait for prediction results...."):
-            st.subheader("Support Vector Machine (SVM) Results: ")
+            st.subheader("Results: ")
+            st.write(predict(num_timesteps_input=7, num_timesteps_output=4))
             st.write("Another val {}".format(calculate(another_val, another_val)))
             st.write("Summed value {}".format(calculate(num_input_timesteps, num_output_timesteps)))
             # st.success('File uploaded succesful!!')
