@@ -1,1 +1,1 @@
-web: sh interactive-app/setup.sh && streamlit interactive-app/run app.py
+web: sh interactive-app/setup.sh && streamlit run interactive-app/app.py
