@@ -60,7 +60,7 @@ Click to download\
             zip.printdir()
             # extracting all the files
             print('Extracting all the files now...')
-            unzip_path = os.path.join('data', 'temp')
+            unzip_path = os.path.join('data', 'raw')
             zip.extractall(path=unzip_path)
             print('Done!')
 
