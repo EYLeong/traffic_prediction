@@ -38,8 +38,9 @@ def app():
 Click to download\
         </a>'
     st.markdown(download_href, unsafe_allow_html=True)
-    sample_zip_path = os.path.join(current_dir,'data', 'sample', 'pred_data.zip') # os.getcwd()
+    sample_zip_path = os.path.join(current_dir, 'data', 'sample', 'pred_data.zip') # os.getcwd()
     st.write(sample_zip_path)
+    st.write(os.getcwd())
     st.write(d)
     st.write(dd)
     download_local_button(sample_zip_path, 'pred_data.zip', 'Download sample files')
