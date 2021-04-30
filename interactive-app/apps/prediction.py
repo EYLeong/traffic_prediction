@@ -14,6 +14,7 @@ import sys
 def app():
     st.title('Traffic Speed Prediction')
     st.write("Let's try predicting some traffic speed!")
+    current_dir = dirname(dirname(abspath(__file__)))
     d = dirname(dirname(abspath(__file__)))
     print(d)
     dd = dirname(dirname(dirname(abspath(__file__))))
@@ -37,7 +38,7 @@ def app():
 Click to download\
         </a>'
     st.markdown(download_href, unsafe_allow_html=True)
-    sample_zip_path = os.path.join('data', 'sample', 'pred_data.zip')
+    sample_zip_path = os.path.join(current_dir,'data', 'sample', 'pred_data.zip') # os.getcwd()
     st.write(sample_zip_path)
     st.write(d)
     st.write(dd)
