@@ -8,10 +8,27 @@ import base64
 import os
 from zipfile import ZipFile
 import torch
+from os.path import dirname, abspath
+import sys
 
 def app():
     st.title('Traffic Speed Prediction')
     st.write("Let's try predicting some traffic speed!")
+    d = dirname(dirname(abspath(__file__)))
+    print(d)
+    dd = dirname(dirname(dirname(abspath(__file__))))
+    print(dd)
+    ddd = os.path.join(dd, 'truncated_data')
+    print(ddd)
+
+    # raw_trunc_dir = "./data/raw/trunc/"
+    # process_dir = "./data/processed/"
+    #
+    # # overwrite = False means that the processing function will only run if the process data files do not exist
+    # # overwrite = True => functions will run regardless
+    # preprocessing_utils.processed(raw_trunc_dir, process_dir, overwrite=False)
+    # A, X, metadata, cat2index, means, stds = preprocessing_utils.load(process_dir)
+
     st.write(torch.cuda.current_device())
     filename = 'README.md'
     with open(filename, 'rb') as f:
