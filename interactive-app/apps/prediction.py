@@ -21,6 +21,7 @@ def app():
     ddd = os.path.join(dd, 'truncated_data')
     print(ddd)
 
+
     # raw_trunc_dir = "./data/raw/trunc/"
     # process_dir = "./data/processed/"
     #
@@ -37,6 +38,9 @@ Click to download\
         </a>'
     st.markdown(download_href, unsafe_allow_html=True)
     sample_zip_path = os.path.join('data', 'sample', 'pred_data.zip')
+    st.write(sample_zip_path)
+    st.write(d)
+    st.write(dd)
     download_local_button(sample_zip_path, 'pred_data.zip', 'Download sample files')
 
     zip_file = st.file_uploader("Upload file", type="zip")
