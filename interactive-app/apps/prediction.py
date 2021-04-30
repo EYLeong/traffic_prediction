@@ -28,8 +28,6 @@ def app():
     # # overwrite = True => functions will run regardless
     # preprocessing_utils.processed(raw_trunc_dir, process_dir, overwrite=False)
     # A, X, metadata, cat2index, means, stds = preprocessing_utils.load(process_dir)
-
-    st.write(torch.cuda.current_device())
     filename = 'README.md'
     with open(filename, 'rb') as f:
         bytes = f.read()
