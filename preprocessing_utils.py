@@ -101,8 +101,13 @@ def load(process_dir):
 
     return A, X, metadata, cat2index, means, stds
 
-def denormalize(X, stds, means):
-    return X * stds.reshape(1, -1, 1) + means.reshape(1, -1, 1)
+def denormalize(X, stds, means, rounding=False):
+    """
+    rounding = nearest integer
+    Returns the denormalize data
+    """
+    result = X * stds.reshape(1, -1, 1) + means.reshape(1, -1, 1)
+    return np.round(result) if rounding else result
 
 def get_normalized_adj(A):
     """
@@ -271,7 +276,7 @@ def get_dates(dir_name):
 
 # sorted(os.listdir(raw_trunc_dir), key=get_dates)
 def get_day_time(file_name):
-    date_str_format = "%H:%M:%S"
+    date_str_format = "%H_%M_%S"
     my_date = datetime.strptime(file_name, date_str_format)
     return my_date
 
