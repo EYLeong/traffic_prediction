@@ -62,11 +62,12 @@ def predict(num_timesteps_input, num_timesteps_output):
     test_target = torch.from_numpy(np.array(target))
 
     # Load model
-    saved_models_path = os.path.join(dirname(os.getcwd()), 'saved_models', 'last_saved_model.txt')
+    traffic_prediction_path = dirname(interactive_app_path)
+    saved_models_path = os.path.join(traffic_prediction_path, 'saved_models', 'last_saved_model.txt')
     with open(saved_models_path) as f:
         saved_model = f.read()
 
-    latest_model_path = os.path.join(dirname(os.getcwd()), saved_model)
+    latest_model_path = os.path.join(traffic_prediction_path, saved_model)
     checkpoint = torch.load(latest_model_path, map_location=None)
     model_stgcn = model.Stgcn_Model(checkpoint['model_nodes_num'], checkpoint['model_features_num'],
                                     checkpoint['model_input_timesteps'], checkpoint['model_num_output'])
