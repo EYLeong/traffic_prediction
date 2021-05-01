@@ -37,9 +37,9 @@ def calculate(num_input, num_output):
 def predict(num_timesteps_input, num_timesteps_output):
     device = torch.device('cpu')
     loss_criterion = nn.MSELoss()
-
-    raw_dir = os.path.join(os.getcwd(), 'data', 'raw')
-    process_dir = os.path.join(os.getcwd(), 'data', 'processed')
+    interactive_app_path = dirname(dirname(abspath(__file__))) # Use this. Having issues with Heroku path system
+    raw_dir = os.path.join(interactive_app_path, 'data', 'raw')
+    process_dir = os.path.join(interactive_app_path, 'data', 'processed')
     preprocessing_utils.processed(raw_dir, process_dir, overwrite=True)
     A, X, metadata, cat2index, means, stds = preprocessing_utils.load(process_dir)
     test_original_data = X
