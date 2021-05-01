@@ -11,6 +11,13 @@ import torch
 from os.path import dirname, abspath
 import sys
 
+
+import pandas as pd
+import geopandas as gpd
+from shapely.geometry import LineString
+import contextily as ctx
+import matplotlib.pyplot as plt
+
 def app():
     st.beta_set_page_config(page_title='your_title', page_icon="hi")
     st.title('Traffic Speed Prediction')
