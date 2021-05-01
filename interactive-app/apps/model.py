@@ -9,19 +9,9 @@ def app():
 
     st.write('Model used: STGCN')
 
-    st.write('Show basic implementation details of the model')
-
-    # Load iris dataset
-    iris = datasets.load_iris()
-    X = iris.data
-    Y = iris.target
+    # st.write('Show basic implementation details of the model')
 
     # Model building
     st.header('Model performance')
-    X_train, X_test, Y_train, Y_test = train_test_split(
-        X, Y, test_size=0.2, random_state=42)
-    clf = RandomForestClassifier()
-    clf.fit(X_train, Y_train)
-    score = clf.score(X_test, Y_test)
-    st.write('Accuracy:')
-    st.write(score)
+    st.write('Show some scores and visualisation? maybe enyis visualisation')
+

@@ -68,7 +68,7 @@ def predict(num_timesteps_input, num_timesteps_output):
         saved_model = f.read()
 
     latest_model_path = os.path.join(traffic_prediction_path, saved_model)
-    checkpoint = torch.load(latest_model_path, map_location=None)
+    checkpoint = torch.load(latest_model_path, map_location=torch.device('cpu'))
     model_stgcn = model.Stgcn_Model(checkpoint['model_nodes_num'], checkpoint['model_features_num'],
                                     checkpoint['model_input_timesteps'], checkpoint['model_num_output'])
     model_stgcn.load_state_dict(checkpoint['state_dict'])
@@ -80,4 +80,4 @@ def predict(num_timesteps_input, num_timesteps_output):
     predicted = model_utils.predict(loaded_model, test_input, adj_mat)
     predicted_denorm = preprocessing_utils.denormalize(predicted, stds[0], means[0])
 
-    return predicted_denorm
+    return np.array(predicted_denorm), A, X, metadata

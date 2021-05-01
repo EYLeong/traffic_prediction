@@ -6,14 +6,14 @@ from sklearn import datasets
 def app():
     st.title('Data')
 
-    st.write("About Data used")
+    st.write("Show Sample Data")
 
     st.write("TODO: Show the data set, visualisations, etc.")
 
-    iris = datasets.load_iris()
-    X = pd.DataFrame(iris.data, columns = iris.feature_names)
-    Y = pd.Series(iris.target, name = 'class')
-    df = pd.concat([X,Y], axis=1)
-    df['class'] = df['class'].map({0:"setosa", 1:"versicolor", 2:"virginica"})
+    # iris = datasets.load_iris()
+    # X = pd.DataFrame(iris.data, columns = iris.feature_names)
+    # Y = pd.Series(iris.target, name = 'class')
+    # df = pd.concat([X,Y], axis=1)
+    # df['class'] = df['class'].map({0:"setosa", 1:"versicolor", 2:"virginica"})
 
-    st.write(df)
+    # st.write(df)
