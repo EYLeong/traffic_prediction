@@ -41,7 +41,7 @@ def predict(num_timesteps_input, num_timesteps_output):
     raw_dir = os.path.join(interactive_app_path, 'data', 'raw')
     process_dir = os.path.join(interactive_app_path, 'data', 'processed')
     preprocessing_utils.processed(raw_dir, process_dir, overwrite=True)
-    A, X, metadata, cat2index, means, stds = preprocessing_utils.load(process_dir)
+    A, X, metadata, cat2index, timesteps, means, stds = preprocessing_utils.load(process_dir)
     test_original_data = X
     test_input, test_target = preprocessing_utils.generate_dataset(test_original_data,
                                                                    num_timesteps_input=num_timesteps_input,

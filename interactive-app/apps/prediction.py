@@ -114,6 +114,27 @@ def app():
                 st.write('#### Predictions')
                 predictions_expander = st.beta_expander("Click to expand", expanded=False)
                 with predictions_expander:
+                    def loc_to_linestring(loc):
+                        coordArr = loc.split()
+                        coordArr = [float(coord) for coord in coordArr]
+                        return LineString([coordArr[1::-1], coordArr[3:1:-1]])
+
+                    def plotGeoPerformance(metadata, speedbands):
+                        df = pd.DataFrame(metadata).transpose()
+                        df["speedbands"] = speedbands
+                        loc = df["start_pos"] + " " + df["end_pos"]
+                        linestrings = loc.apply(loc_to_linestring)
+                        gdf = gpd.GeoDataFrame(df, geometry=linestrings, crs="EPSG:4326")
+                        gdf = gdf.to_crs('EPSG:3857')
+                        fig, ax = plt.subplots(figsize=(10, 10))
+                        gdf.plot(ax=ax, column="speedbands", legend=True, cmap="OrRd",
+                                 legend_kwds={'label': 'speedbands'})
+                        ax.set_xlabel("Longitude")
+                        ax.set_ylabel("Latitude")
+                        ctx.add_basemap(ax)
+
+                    timestep_speedbands = results.reshape(predicted_denorm.shape[2], predicted_denorm.shape[1])
+                    plotGeoPerformance(metadata, timestep_speedbands[0])
                     st.write("Here are the prediction results")
                     results = results[:, :, :num_output_timesteps]
                     st.write(results)
