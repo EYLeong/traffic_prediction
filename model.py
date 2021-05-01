@@ -9,9 +9,10 @@ class Temporal_Layer(nn.Module):
         super(Temporal_Layer, self).__init__()
         self.conv1 = nn.Conv2d(in_channels, out_channels, (1, kernel))
         self.conv2 = nn.Conv2d(in_channels, out_channels, (1, kernel))
+        self.device =  torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
         
     def forward(self, x):
-        x = x.permute(0,3,1,2).type(torch.FloatTensor)
+        x = x.permute(0,3,1,2).type(torch.FloatTensor).to(device=self.device)
         normal = self.conv1(x)
         sig = torch.sigmoid(self.conv2(x))
         out = normal * sig
@@ -30,6 +31,7 @@ class Stgcn_Block(nn.Module):
         self.initialise_weight()
         
         self.batch_norm = nn.BatchNorm2d(nodes_num)
+        self.device =  torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
         
         
     def initialise_weight(self):
@@ -43,7 +45,7 @@ class Stgcn_Block(nn.Module):
         #Spatial Graph Convolution
         #n = batch_size, h = nodes_num, w = input_timesteps -1, c = out_channels
         t = temporal_block1.permute(1,0,2,3) #Converts tensor from nhwc to hnwc for multiplication with adj_matrix
-        t = t.type(torch.DoubleTensor)
+        t = t.type(torch.DoubleTensor).to(device = self.device)
         gconv1 = torch.einsum("ij, jklm -> kilm", [adj_hat, t]) #(h,h) * (h,n,w,c) -> (n,h,w,c) 
         gconv2 = F.relu(torch.matmul(gconv1, self.weight.double())) #gconv2.shape = n,h,w,c* where c* = spatial_channels
         
