@@ -7,7 +7,7 @@ import json
 import torch
 from copy import deepcopy
 from datetime import datetime
-from pathlib import Path
+from pathlib import Path, PurePath
 
 def processed(files_dir, process_dir, overwrite=False):
     '''
@@ -15,7 +15,7 @@ def processed(files_dir, process_dir, overwrite=False):
     If overwrite=False, do not process the data if the processed files already exist
     -----------------------------
     :param str files_dir: the directory of the raw dataset
-           str files_dir: the directory of the processed output
+           str process_dir: the directory of the processed output
     -----------------------------
     :returns: None
     '''
@@ -26,12 +26,14 @@ def processed(files_dir, process_dir, overwrite=False):
     adj_path = os.path.join(process_dir, "adj.npy")
     metadata_path = os.path.join(process_dir, "metadata.json")
     cat2index_path = os.path.join(process_dir, "cat2index.json")
+    timestamps_path = os.path.join(process_dir, "timestamps.json")
     
     if (not overwrite and
             (os.path.isfile(dataset_path)
             and os.path.isfile(adj_path)
             and os.path.isfile(metadata_path)
             and os.path.isfile(cat2index_path)
+            and os.path.isfile(timestamps_path)
             )
        ):
         # do not run the function if both overwrite is false and all processed files already exist
@@ -61,6 +63,15 @@ def processed(files_dir, process_dir, overwrite=False):
     
     with open(cat2index_path, 'w') as outfile:
         json.dump(cat2index, outfile, sort_keys=True, indent=4)
+        
+    timestamps = {}
+    # Generate json with timestamps
+    for i, v in enumerate(file_paths):
+        fileparts = PurePath(v).parts
+        timestamps[i] = fileparts[-2] + "_" + fileparts[-1].split(".")[0]
+        
+    with open(timestamps_path, 'w') as outfile:
+        json.dump(timestamps, outfile, sort_keys=True, indent=4)
     
     print("Done")
 
@@ -75,6 +86,7 @@ def load(process_dir):
         npy: Feature matrix
         dict: Metadata
         dict: cat2index
+        dict: timestamps
         npy: means 
         npy: stds
     '''
@@ -82,6 +94,7 @@ def load(process_dir):
     adj_path = os.path.join(process_dir, "adj.npy")
     metadata_path = os.path.join(process_dir, "metadata.json")
     cat2index_path = os.path.join(process_dir, "cat2index.json")
+    timestamps_path = os.path.join(process_dir, "timestamps.json")
 
     A = np.load(adj_path)
     X = np.load(dataset_path)
@@ -93,13 +106,16 @@ def load(process_dir):
     with open(cat2index_path) as json_file:
         cat2index = json.load(json_file)
         
+    with open(timestamps_path) as json_file:
+        timestamps = json.load(json_file)
+        
     # Normalization using Z-score method
     means = np.mean(X, axis=(0, 2))
     X = X - means.reshape(1, -1, 1)
     stds = np.std(X, axis=(0, 2))
     X = X / stds.reshape(1, -1, 1)
 
-    return A, X, metadata, cat2index, means, stds
+    return A, X, metadata, cat2index, timestamps, means, stds
 
 def denormalize(X, stds, means, rounding=False):
     """
