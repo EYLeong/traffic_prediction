@@ -12,6 +12,7 @@ from os.path import dirname, abspath
 import sys
 
 def app():
+    st.beta_set_page_config(page_title='your_title', page_icon="hi")
     st.title('Traffic Speed Prediction')
     st.write("> Let's try predicting some traffic speed!")
     current_dir = dirname(dirname(abspath(__file__)))
