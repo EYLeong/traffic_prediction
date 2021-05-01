@@ -134,7 +134,7 @@ def app():
                         ctx.add_basemap(ax)
 
                     timestep_speedbands = results.reshape(predicted_denorm.shape[2], predicted_denorm.shape[1])
-                    plotGeoPerformance(metadata, timestep_speedbands[0])
+                    st.write(plotGeoPerformance(metadata, timestep_speedbands[0]))
                     st.write("Here are the prediction results")
                     results = results[:, :, :num_output_timesteps]
                     st.write(results)
