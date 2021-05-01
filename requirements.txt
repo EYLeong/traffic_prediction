@@ -1,0 +1,13 @@
+-f https://download.pytorch.org/whl/torch_stable.html
+sklearn==0.0
+matplotlib==3.3.4
+numpy==1.19.2
+pandas==1.2.1
+streamlit==0.81.0
+tqdm==4.60.0
+torch==1.8.1+cpu
+torchvision==0.9.1+cpu
+torchaudio==0.8.1
+
+
+
