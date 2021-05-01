@@ -104,8 +104,12 @@ def app():
 
                 # Display Results
                 st.write('#### Predictions')
-                results = results[:, :, :num_output_timesteps]
-                st.write(results)
+                predictions_expander = st.beta_expander("Click to expand", expanded=False)
+                with predictions_expander:
+                    st.write("Here are the prediction results")
+                    results = results[:, :, :num_output_timesteps]
+                    st.write(results)
+
 
 
 
