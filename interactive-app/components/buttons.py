@@ -45,11 +45,16 @@ def download_local_button(download_file_path, download_file_name, button_text):
 
 
 def download_button(object_to_download, download_filename, button_text):
+    # Accepting df object now only
     try:
         # some strings <-> bytes conversions necessary here
-        b64 = base64.b64encode(object_to_download.encode()).decode()
+        csv = object_to_download.to_csv(index=False)
+        b64 = base64.b64encode(csv.encode()).decode()
+        # b64 = base64.b64encode(object_to_download.encode()).decode()
     except AttributeError as e:
-        b64 = base64.b64encode(object_to_download).decode()
+        csv = object_to_download.to_csv(index=False)
+        b64 = base64.b64encode(csv).decode()
+        #b64 = base64.b64encode(object_to_download).decode()
 
     button_uuid = str(uuid.uuid4()).replace("-", "")
     button_id = re.sub("\d+", "", button_uuid)
@@ -84,7 +89,7 @@ def download_button(object_to_download, download_filename, button_text):
 
     dl_link = (
             custom_css
-            + f'<a download="{download_filename}" id="{button_id}" href="data:file/txt;base64,{b64}">{button_text}</a><br><br>'
+            + f'<a download="{download_filename}" id="{button_id}" href="data:file/csv;base64,{b64}">{button_text}</a><br><br>'
     )
     # dl_link = f'<a download="{download_filename}" id="{button_id}" href="data:file/txt;base64,{b64}"><input type="button" kind="primary" value="{button_text}"></a><br></br>'
 

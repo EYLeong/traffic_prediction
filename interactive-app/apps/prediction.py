@@ -1,6 +1,6 @@
 import streamlit as st
 from utils.prediction import predict
-from components.buttons import download_local_button
+from components.buttons import download_local_button, download_button
 import datetime
 import pandas as pd
 import numpy as np
@@ -96,6 +96,7 @@ def app():
                     st.write("Here's the metadata of the input data you have uploaded")
                     df = pd.DataFrame(metadata).transpose()
                     st.write(df)
+                    download_button(df, 'metadata.csv', 'Download metadata')
 
                 # Display Results
                 st.write('#### Predictions')
@@ -128,7 +129,9 @@ def app():
                     st.image("currentPrediction.png")
                     st.write("Below is a table of the predicted traffic speedbands for the respective roads. Please refer to the metadata above for the index mappings")
                     results = results[:, :,num_output_timesteps-1]
+                    results = pd.DataFrame(results)
                     st.write(results)
+                    download_button(results, 'predictions.csv', 'Download predictions')
 
     # -----------------------------------------------------------------------------------
 
