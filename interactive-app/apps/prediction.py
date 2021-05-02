@@ -1,5 +1,5 @@
 import streamlit as st
-from utils.prediction import calculate, predict
+from utils.prediction import predict
 from components.buttons import download_local_button
 import datetime
 import pandas as pd
@@ -39,7 +39,7 @@ def app():
     st.sidebar.subheader("Select Input Timesteps")
     st.sidebar.write("How much past data to input into the model for prediction")
     # input_timestep_options = {1: "1 (5 minutes)", 2: "2 (10 minutes)", 3: "3 (15 minutes) - optimal"}
-    input_timestep_options = {7: "7 (35 minutes) - default"}
+    input_timestep_options = {8: "8 (40 minutes) - default"}
     num_input_timesteps = st.sidebar.selectbox("Number of Input Timesteps", options=list(input_timestep_options.keys()),
                                                format_func=lambda x: input_timestep_options[x])
 
@@ -47,7 +47,7 @@ def app():
     st.sidebar.subheader("Select Output Timesteps")
     st.sidebar.write("How far do you want to predict the traffic speeds")
     output_timestep_options = {1: "1 (5 minutes)", 2: "2 (10 minutes)", 3: "3 (15 minutes)",
-                               4: "4 (20 minutes) - default"}
+                               4: "4 (20 minutes)"}
     num_output_timesteps = st.sidebar.selectbox("Number of Output Timesteps",
                                                 options=list(output_timestep_options.keys()),
                                                 format_func=lambda x: output_timestep_options[x], index=3)
@@ -65,7 +65,7 @@ def app():
     st.write("Please upload the zip file with the correct format below")
     zip_file = st.file_uploader("Upload file", type="zip")
     if zip_file is not None:
-        file_details = {'file_name': zip_file.name, 'file_type': zip_file.type}
+        # file_details = {'file_name': zip_file.name, 'file_type': zip_file.type}
 
         # Saving File
         saved_zip_path = os.path.join(current_dir, 'data', zip_file.name)
@@ -87,7 +87,7 @@ def app():
         if st.button("Predict Traffic Speeds", key='predict'):
             with st.spinner("Please wait for prediction results...."):
                 st.write('## Results')
-                results, A, X, metadata = predict(num_timesteps_input=7, num_timesteps_output=4)
+                results, A, X, metadata = predict(num_timesteps_input=8, num_timesteps_output=4)
 
                 # Display Metadata
                 st.write('#### Metadata')

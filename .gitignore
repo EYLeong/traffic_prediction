@@ -1,6 +1,6 @@
 .ipynb_checkpoints/
 data/raw
 data/big
-__pycache__
+**/__pycache__
 .vscode
 /saved_models/input8_output4_loss0.6965036988258362
