@@ -61,6 +61,22 @@ def save_model(model, optimizer):
     f.close()
     print(f"Model has been saved to path : {path}")
     
+    
+def save_model_timesteps(model, optimizer, input_timesteps, output_timesteps, loss):
+    if not os.path.exists('./saved_models/timesteps'):
+        os.makedirs('./saved_models/timesteps')
+    path = "./saved_models/timesteps/input{}_output{}_loss{}".format(input_timesteps, output_timesteps, loss)
+    checkpoint = {'state_dict': model.state_dict(),
+              'opti_state_dict': optimizer.state_dict(),
+              'model_lr': model.lr,
+              'model_nodes_num': model.nodes_num,
+              'model_features_num': model.features_num,
+              'model_input_timesteps': model.input_timesteps,
+              'model_num_output': model.num_output
+              }
+    torch.save(checkpoint, path)
+    return path
+    
 def load_model(path=None, map_location=None):
     
     if path == None:
