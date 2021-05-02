@@ -20,8 +20,9 @@ def app():
     st.write('We heavily adopted the STGCN architecture from the novel STGCN deep learning framework proposed by the '
              'paper [Spatio-Temporal Graph Convolutional Networks: A Deep Learning Framework for Traffic '
              'Forecasting](https://arxiv.org/abs/1709.04875)')
-    # image_path = os.path.join(dirname(dirname(abspath(__file__))), 'utils', 'model_architecture.jpg')
-    image_path = os.path.join('utils', 'model_architecture.jpg')
+    # image_path = os.path.join(dirname(dirname(abspath(__file__))), 'utils', 'model_architecture.jpg') # Streamlit only accepts relative path for image (bug)
+    # image_path = os.path.join('utils', 'model_architecture.jpg')
+    image_path = 'https://raw.githubusercontent.com/EYLeong/traffic_prediction/master/interactive-app/utils/model_architecture.jpg'
     st.image(image_path)
     st.write("""
     In the figure above, the overall architecture contains 2 ST-Conv blocks followed by an output block, which itself is composed of a temporal block and a last fully connected layer.
