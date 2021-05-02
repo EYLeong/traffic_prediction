@@ -181,4 +181,4 @@ def plot_map(filepath, links=[]):
     ax.set_ylabel("Latitude")
     ax.legend()
     ctx.add_basemap(ax)
-    fig.show()
+    plt.show()

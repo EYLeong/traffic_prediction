@@ -125,7 +125,7 @@ def train_epoch(model, optimizer, loss_criterion, adj_mat, x_input, x_target, ba
         
     return sum(training_loss) / len(training_loss)
 
-def train(model, optimizer, loss_criterion, epochs, patience, adj_mat, x_input, x_target, val_input, val_target, batch_size):
+def train(model, optimizer, lr, loss_criterion, epochs, patience, adj_mat, x_input, x_target, val_input, val_target, batch_size):
     best_loss = float("inf")
     early_stop = 0
     best_weights = None
@@ -162,7 +162,7 @@ def train(model, optimizer, loss_criterion, epochs, patience, adj_mat, x_input, 
     #For Model saving purposes
     model.lr = lr 
     model.nodes_num = adj_mat.shape[0]
-    model.features_num = training_input.shape[3]
-    model.input_timesteps = num_timesteps_input
-    model.num_output = num_timesteps_output
+    model.features_num = x_input.shape[3]
+    model.input_timesteps = x_input.shape[2]
+    model.num_output = x_target.shape[2]
     return model, training_loss, validation_loss
