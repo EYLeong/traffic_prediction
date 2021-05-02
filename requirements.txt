@@ -7,3 +7,4 @@ streamlit==0.81.0
 torch==1.8.1+cpu
 geopandas==0.9.0
 contextily==1.1.0
+tqdm==4.60.0
