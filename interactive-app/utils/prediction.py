@@ -35,7 +35,7 @@ def calculate(num_input, num_output):
     return num_input + num_output
 
 def predict(num_timesteps_input, num_timesteps_output):
-    device = torch.device('cpu')
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     loss_criterion = nn.MSELoss()
     interactive_app_path = dirname(dirname(abspath(__file__))) # Use this. Having issues with Heroku path system
     raw_dir = os.path.join(interactive_app_path, 'data', 'raw')
@@ -58,8 +58,8 @@ def predict(num_timesteps_input, num_timesteps_output):
                 (0, 2, 1)))
         target.append(X[:, 0, i + num_timesteps_input: j])
 
-    test_input = torch.from_numpy(np.array(features))
-    test_target = torch.from_numpy(np.array(target))
+    test_input = torch.from_numpy(np.array(features)).to(device)
+    test_target = torch.from_numpy(np.array(target)).to(device)
 
     # Load model
     traffic_prediction_path = dirname(interactive_app_path)
@@ -75,9 +75,11 @@ def predict(num_timesteps_input, num_timesteps_output):
     optimizer = optim.Adam(model_stgcn.parameters(), lr=checkpoint['model_lr'])
     optimizer = optimizer.load_state_dict(checkpoint['opti_state_dict'])
     loaded_model = model_stgcn
+    loaded_model.to(device)
     loaded_optimizer = optimizer
 
     predicted = model_utils.predict(loaded_model, test_input, adj_mat)
+    predicted = predicted.cpu().numpy()
     predicted_denorm = preprocessing_utils.denormalize(predicted, stds[0], means[0])
 
     return np.array(predicted_denorm), A, X, metadata
