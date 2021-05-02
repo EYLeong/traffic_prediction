@@ -124,9 +124,9 @@ def app():
                     timestep_speedbands = results.reshape(results.shape[2], results.shape[1])
                     plotGeoPerformance(metadata, timestep_speedbands[num_output_timesteps-1])
 
-                    st.write("Here are the prediction results")
+                    st.write("Below is a graph of the predicted traffic speedbands plotted on the roads of this geographical map. The colours of the roads represent the varying speedband numbers.")
                     st.image("currentPrediction.png")
-                    st.write("Refer to metadata above for the index mappings")
+                    st.write("Below is a table of the predicted traffic speedbands for the respective roads. Please refer to the metadata above for the index mappings")
                     results = results[:, :,num_output_timesteps-1]
                     st.write(results)
 
