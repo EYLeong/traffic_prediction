@@ -51,23 +51,12 @@ def app():
     num_output_timesteps = st.sidebar.selectbox("Number of Output Timesteps",
                                                 options=list(output_timestep_options.keys()),
                                                 format_func=lambda x: output_timestep_options[x], index=3)
-    # Slider
-    # @st.cache()
-    # slider_val = st.sidebar.slider("Maximum number of iterations", 1, 5)
-    # --------------------------------
 
-    # another_val = st.slider("Maximum number of iterationsss", 1, 5)
-    # field_1 = st.text_input('Your Name')
-    # field_2 = st.text_area("Your address")
-    # start_date = datetime.date(1990, 7, 6)
-    # date = st.date_input('Your birthday', start_date)
-    # ------------------------------------------------------------------------------------------------
+    # -----------------------------------------------------------------------------------
 
+    # Main Content --------------------------------------------------------------------------------
     sample_zip_path = os.path.join(current_dir, 'data', 'sample', 'input.zip')
-    # st.write(sample_zip_path)
-    # st.write(os.getcwd())
-    # st.write(d)
-    # st.write(dd)
+
     st.write("### 1. Download Sample Input Files")
     st.write("Here's a sample input file with the format that is required for the model prediction. You can download this, change the data and upload the zip file below.")
     download_local_button(sample_zip_path, 'input.zip', 'Download files')
@@ -77,7 +66,6 @@ def app():
     zip_file = st.file_uploader("Upload file", type="zip")
     if zip_file is not None:
         file_details = {'file_name': zip_file.name, 'file_type': zip_file.type}
-        # st.write(file_details)
 
         # Saving File
         saved_zip_path = os.path.join(current_dir, 'data', zip_file.name)
@@ -117,7 +105,7 @@ def app():
                         coordArr = loc.split()
                         coordArr = [float(coord) for coord in coordArr]
                         return LineString([coordArr[1::-1], coordArr[3:1:-1]])
-                    
+
                     def plotGeoPerformance(metadata, speedbands):
                         df = pd.DataFrame(metadata).transpose()
                         df["speedbands"] = speedbands
@@ -131,21 +119,18 @@ def app():
                         ax.set_xlabel("Longitude")
                         ax.set_ylabel("Latitude")
                         ctx.add_basemap(ax)
-                        plt.savefig("current.png")
-                    
+                        plt.savefig("currentPrediction.png")
+
                     timestep_speedbands = results.reshape(results.shape[2], results.shape[1])
-                    plotGeoPerformance(metadata, timestep_speedbands[0])
-                    st.image("current.pngS")
+                    plotGeoPerformance(metadata, timestep_speedbands[num_output_timesteps-1])
+
                     st.write("Here are the prediction results")
-                    results = results[:, :, :num_output_timesteps]
+                    st.image("currentPrediction.png")
+                    st.write("Refer to metadata above for the index mappings")
+                    results = results[:, :,num_output_timesteps-1]
                     st.write(results)
 
-
-
-
-                # st.success('File uploaded succesful!!')
-                # st.error('Unable to Load the selected file.Please choose another!!')
-
+    # -----------------------------------------------------------------------------------
 
 
 
