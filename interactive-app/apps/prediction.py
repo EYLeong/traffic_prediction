@@ -131,13 +131,13 @@ def app():
                         ax.set_xlabel("Longitude")
                         ax.set_ylabel("Latitude")
                         ctx.add_basemap(ax)
-                        plt.savefig("current.png")
+                        plt.savefig("currentPrediction.png")
                     
                     timestep_speedbands = results.reshape(results.shape[2], results.shape[1])
                     plotGeoPerformance(metadata, timestep_speedbands[num_output_timesteps-1])
 
                     st.write("Here are the prediction results")
-                    st.image("current.pngS")
+                    st.image("currentPrediction.png")
                     # st.write("Here are the prediction results")
                     results = results[:, :, :num_output_timesteps]
                     st.write(results)
