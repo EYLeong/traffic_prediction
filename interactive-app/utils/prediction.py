@@ -16,24 +16,6 @@ import model_utils
 import model
 
 
-@st.cache(persist=True)
-def load_data(data):
-    return data
-
-
-@st.cache(persist=True)
-def split_data(data):
-    return data
-
-#@st.cache(suppress_st_warning=True)
-def calculate(num_input, num_output):
-    time.sleep(2)
-    dd = dirname(dirname(dirname(abspath(__file__))))
-    ddd = os.path.join(dd, 'truncated_data')
-    print("here",dd, ddd)
-    print("syspath", sys.path[0])
-    return num_input + num_output
-
 def predict(num_timesteps_input, num_timesteps_output):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     loss_criterion = nn.MSELoss()
@@ -47,7 +29,7 @@ def predict(num_timesteps_input, num_timesteps_output):
                                                                    num_timesteps_input=num_timesteps_input,
                                                                    num_timesteps_output=num_timesteps_output)
     adj_mat = preprocessing_utils.get_normalized_adj(A)
-    adj_mat = torch.from_numpy(adj_mat).to(device)
+    adj_mat = torch.from_numpy(adj_mat).to(device).float()
 
     i = 0
     indices = [(i, i + (num_timesteps_input + num_timesteps_output))]
@@ -63,11 +45,11 @@ def predict(num_timesteps_input, num_timesteps_output):
 
     # Load model
     traffic_prediction_path = dirname(interactive_app_path)
-    saved_models_path = os.path.join(traffic_prediction_path, 'saved_models', 'last_saved_model.txt')
-    with open(saved_models_path) as f:
-        saved_model = f.read()
+    # saved_models_path = os.path.join(traffic_prediction_path, 'saved_models', 'last_saved_model.txt')
+    # with open(saved_models_path) as f:
+    #     saved_model = f.read()
 
-    latest_model_path = os.path.join(traffic_prediction_path, saved_model)
+    latest_model_path = os.path.join(traffic_prediction_path, 'saved_models', 'Final_STGCN_Weights')
     checkpoint = torch.load(latest_model_path, map_location=torch.device('cpu'))
     model_stgcn = model.Stgcn_Model(checkpoint['model_nodes_num'], checkpoint['model_features_num'],
                                     checkpoint['model_input_timesteps'], checkpoint['model_num_output'])
