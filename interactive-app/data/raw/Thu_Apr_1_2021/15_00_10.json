@@ -1,0 +1,479 @@
+[
+    {
+        "LinkID": "103000423",
+        "Location": "1.303367431108309 103.83695623568973 1.3037416943275602 103.83626910885548",
+        "MaximumSpeed": "19",
+        "MinimumSpeed": "10",
+        "RoadCategory": "C",
+        "RoadName": "BIDEFORD ROAD",
+        "SpeedBand": 2
+    },
+    {
+        "LinkID": "103000768",
+        "Location": "1.304865918473938 103.836845680642 1.3052352879030098 103.83703400759208",
+        "MaximumSpeed": "29",
+        "MinimumSpeed": "20",
+        "RoadCategory": "C",
+        "RoadName": "BIDEFORD ROAD",
+        "SpeedBand": 3
+    },
+    {
+        "LinkID": "103000843",
+        "Location": "1.3022825552999076 103.83682781397152 1.303367431108309 103.83695623568973",
+        "MaximumSpeed": "39",
+        "MinimumSpeed": "30",
+        "RoadCategory": "C",
+        "RoadName": "BIDEFORD ROAD",
+        "SpeedBand": 4
+    },
+    {
+        "LinkID": "103000980",
+        "Location": "1.302472770809991 103.83647688713734 1.303367431108309 103.83695623568973",
+        "MaximumSpeed": "39",
+        "MinimumSpeed": "30",
+        "RoadCategory": "C",
+        "RoadName": "BIDEFORD ROAD",
+        "SpeedBand": 4
+    },
+    {
+        "LinkID": "103004580",
+        "Location": "1.3052352879030098 103.83703400759208 1.30507659899449 103.83704979482759",
+        "MaximumSpeed": "29",
+        "MinimumSpeed": "20",
+        "RoadCategory": "C",
+        "RoadName": "CAIRNHILL ROAD",
+        "SpeedBand": 3
+    },
+    {
+        "LinkID": "103005716",
+        "Location": "1.3045092553215205 103.83668202785353 1.304865918473938 103.836845680642",
+        "MaximumSpeed": "19",
+        "MinimumSpeed": "10",
+        "RoadCategory": "C",
+        "RoadName": "BIDEFORD ROAD",
+        "SpeedBand": 2
+    },
+    {
+        "LinkID": "103007532",
+        "Location": "1.30507659899449 103.83704979482759 1.304865918473938 103.836845680642",
+        "MaximumSpeed": "39",
+        "MinimumSpeed": "30",
+        "RoadCategory": "C",
+        "RoadName": "CAIRNHILL ROAD",
+        "SpeedBand": 4
+    },
+    {
+        "LinkID": "103007692",
+        "Location": "1.3035489358103933 103.83776887220807 1.302368106775232 103.83773686393967",
+        "MaximumSpeed": "29",
+        "MinimumSpeed": "20",
+        "RoadCategory": "C",
+        "RoadName": "CAIRNHILL ROAD",
+        "SpeedBand": 3
+    },
+    {
+        "LinkID": "103007800",
+        "Location": "1.3048217218355944 103.83707467521215 1.3044183116533392 103.83719983316885",
+        "MaximumSpeed": "39",
+        "MinimumSpeed": "30",
+        "RoadCategory": "C",
+        "RoadName": "CAIRNHILL ROAD",
+        "SpeedBand": 4
+    },
+    {
+        "LinkID": "103008040",
+        "Location": "1.3045092553215205 103.83668202785353 1.3044183116533392 103.83719983316885",
+        "MaximumSpeed": "29",
+        "MinimumSpeed": "20",
+        "RoadCategory": "C",
+        "RoadName": "BIDEFORD ROAD",
+        "SpeedBand": 3
+    },
+    {
+        "LinkID": "103008060",
+        "Location": "1.3044183116533392 103.83719983316885 1.303741945372438 103.83775077582264",
+        "MaximumSpeed": "39",
+        "MinimumSpeed": "30",
+        "RoadCategory": "C",
+        "RoadName": "CAIRNHILL ROAD",
+        "SpeedBand": 4
+    },
+    {
+        "LinkID": "103009728",
+        "Location": "1.3037416943275602 103.83626910885548 1.3045092553215205 103.83668202785353",
+        "MaximumSpeed": "19",
+        "MinimumSpeed": "10",
+        "RoadCategory": "C",
+        "RoadName": "BIDEFORD ROAD",
+        "SpeedBand": 2
+    },
+    {
+        "LinkID": "103009752",
+        "Location": "1.300894140137005 103.83506536931073 1.301338273505198 103.83531169687328",
+        "MaximumSpeed": "29",
+        "MinimumSpeed": "20",
+        "RoadCategory": "C",
+        "RoadName": "ORCHARD LINK",
+        "SpeedBand": 3
+    },
+    {
+        "LinkID": "103009774",
+        "Location": "1.3061465225897502 103.83880185559083 1.3062377442937452 103.8394766018514",
+        "MaximumSpeed": "39",
+        "MinimumSpeed": "30",
+        "RoadCategory": "C",
+        "RoadName": "CAIRNHILL CIRCLE",
+        "SpeedBand": 4
+    },
+    {
+        "LinkID": "103009775",
+        "Location": "1.3062377442937452 103.8394766018514 1.3061465225897502 103.83880185559083",
+        "MaximumSpeed": "29",
+        "MinimumSpeed": "20",
+        "RoadCategory": "C",
+        "RoadName": "CAIRNHILL CIRCLE",
+        "SpeedBand": 3
+    },
+    {
+        "LinkID": "103009778",
+        "Location": "1.3061062153231904 103.83867686759191 1.3061465225897502 103.83880185559083",
+        "MaximumSpeed": "39",
+        "MinimumSpeed": "30",
+        "RoadCategory": "C",
+        "RoadName": "CAIRNHILL CIRCLE",
+        "SpeedBand": 4
+    },
+    {
+        "LinkID": "103009779",
+        "Location": "1.3061465225897502 103.83880185559083 1.3061062153231904 103.83867686759191",
+        "MaximumSpeed": "19",
+        "MinimumSpeed": "10",
+        "RoadCategory": "C",
+        "RoadName": "CAIRNHILL CIRCLE",
+        "SpeedBand": 2
+    },
+    {
+        "LinkID": "103010660",
+        "Location": "1.302827363907628 103.8358484804371 1.3037416943275602 103.83626910885548",
+        "MaximumSpeed": "19",
+        "MinimumSpeed": "10",
+        "RoadCategory": "C",
+        "RoadName": "BIDEFORD ROAD",
+        "SpeedBand": 2
+    },
+    {
+        "LinkID": "103011232",
+        "Location": "1.300445096042101 103.83481898791881 1.300894140137005 103.83506536931073",
+        "MaximumSpeed": "39",
+        "MinimumSpeed": "30",
+        "RoadCategory": "C",
+        "RoadName": "ORCHARD LINK",
+        "SpeedBand": 4
+    },
+    {
+        "LinkID": "103054664",
+        "Location": "1.302827363907628 103.8358484804371 1.3027264094900806 103.83601886262524",
+        "MaximumSpeed": "39",
+        "MinimumSpeed": "30",
+        "RoadCategory": "B",
+        "RoadName": "ORCHARD ROAD",
+        "SpeedBand": 4
+    },
+    {
+        "LinkID": "103059762",
+        "Location": "1.3061062153231904 103.83867686759191 1.3058213331980262 103.83774668207505",
+        "MaximumSpeed": "29",
+        "MinimumSpeed": "20",
+        "RoadCategory": "C",
+        "RoadName": "CAIRNHILL CIRCLE",
+        "SpeedBand": 3
+    },
+    {
+        "LinkID": "103059763",
+        "Location": "1.3058213331980262 103.83774668207505 1.3061062153231904 103.83867686759191",
+        "MaximumSpeed": "29",
+        "MinimumSpeed": "20",
+        "RoadCategory": "C",
+        "RoadName": "CAIRNHILL CIRCLE",
+        "SpeedBand": 3
+    },
+    {
+        "LinkID": "103060004",
+        "Location": "1.302368106775232 103.83773686393967 1.302086677742335 103.83759563901584",
+        "MaximumSpeed": "29",
+        "MinimumSpeed": "20",
+        "RoadCategory": "C",
+        "RoadName": "CAIRNHILL ROAD",
+        "SpeedBand": 3
+    },
+    {
+        "LinkID": "103060008",
+        "Location": "1.302086677742335 103.83759563901584 1.3019633497351588 103.8374651160595",
+        "MaximumSpeed": "29",
+        "MinimumSpeed": "20",
+        "RoadCategory": "C",
+        "RoadName": "CAIRNHILL ROAD",
+        "SpeedBand": 3
+    },
+    {
+        "LinkID": "103060820",
+        "Location": "1.30507659899449 103.83704979482759 1.3048217218355944 103.83707467521215",
+        "MaximumSpeed": "39",
+        "MinimumSpeed": "30",
+        "RoadCategory": "C",
+        "RoadName": "CAIRNHILL ROAD",
+        "SpeedBand": 4
+    },
+    {
+        "LinkID": "103060824",
+        "Location": "1.303741945372438 103.83775077582264 1.3035489358103933 103.83776887220807",
+        "MaximumSpeed": "29",
+        "MinimumSpeed": "20",
+        "RoadCategory": "C",
+        "RoadName": "CAIRNHILL ROAD",
+        "SpeedBand": 3
+    },
+    {
+        "LinkID": "103066000",
+        "Location": "1.3019633497351588 103.8374651160595 1.3019258817670438 103.83754619177634",
+        "MaximumSpeed": "39",
+        "MinimumSpeed": "30",
+        "RoadCategory": "B",
+        "RoadName": "ORCHARD ROAD",
+        "SpeedBand": 4
+    },
+    {
+        "LinkID": "103072100",
+        "Location": "1.302472770809991 103.83647688713734 1.3022825552999076 103.83682781397152",
+        "MaximumSpeed": "39",
+        "MinimumSpeed": "30",
+        "RoadCategory": "B",
+        "RoadName": "ORCHARD ROAD",
+        "SpeedBand": 4
+    },
+    {
+        "LinkID": "103072132",
+        "Location": "1.3027264094900806 103.83601886262524 1.302472770809991 103.83647688713734",
+        "MaximumSpeed": "39",
+        "MinimumSpeed": "30",
+        "RoadCategory": "B",
+        "RoadName": "ORCHARD ROAD",
+        "SpeedBand": 4
+    },
+    {
+        "LinkID": "103075472",
+        "Location": "1.3022825552999076 103.83682781397152 1.3019633497351588 103.8374651160595",
+        "MaximumSpeed": "39",
+        "MinimumSpeed": "30",
+        "RoadCategory": "B",
+        "RoadName": "ORCHARD ROAD",
+        "SpeedBand": 4
+    },
+    {
+        "LinkID": "103075952",
+        "Location": "1.3019633497351588 103.8374651160595 1.3015756400423288 103.83712655244358",
+        "MaximumSpeed": "39",
+        "MinimumSpeed": "30",
+        "RoadCategory": "C",
+        "RoadName": "GRANGE ROAD",
+        "SpeedBand": 4
+    },
+    {
+        "LinkID": "103075956",
+        "Location": "1.3015756400423288 103.83712655244358 1.3010773627698577 103.83670930316063",
+        "MaximumSpeed": "49",
+        "MinimumSpeed": "40",
+        "RoadCategory": "C",
+        "RoadName": "GRANGE ROAD",
+        "SpeedBand": 5
+    },
+    {
+        "LinkID": "103083856",
+        "Location": "1.3010773627698577 103.83670930316063 1.300896354380521 103.83653845351117",
+        "MaximumSpeed": "49",
+        "MinimumSpeed": "40",
+        "RoadCategory": "C",
+        "RoadName": "GRANGE ROAD",
+        "SpeedBand": 5
+    },
+    {
+        "LinkID": "103110766",
+        "Location": "1.305691087013594 103.83749729910596 1.3058213331980262 103.83774668207505",
+        "MaximumSpeed": "29",
+        "MinimumSpeed": "20",
+        "RoadCategory": "C",
+        "RoadName": "CAIRNHILL ROAD",
+        "SpeedBand": 3
+    },
+    {
+        "LinkID": "103110767",
+        "Location": "1.3058213331980262 103.83774668207505 1.305691087013594 103.83749729910596",
+        "MaximumSpeed": "39",
+        "MinimumSpeed": "30",
+        "RoadCategory": "C",
+        "RoadName": "CAIRNHILL ROAD",
+        "SpeedBand": 4
+    },
+    {
+        "LinkID": "104002012",
+        "Location": "1.3001427211310752 103.83555074487087 1.3003491337712214 103.83501238173247",
+        "MaximumSpeed": "29",
+        "MinimumSpeed": "20",
+        "RoadCategory": "C",
+        "RoadName": "ORCHARD BOULEVARD",
+        "SpeedBand": 3
+    },
+    {
+        "LinkID": "104002152",
+        "Location": "1.300427116194058 103.83609093250057 1.3001427211310752 103.83555074487087",
+        "MaximumSpeed": "29",
+        "MinimumSpeed": "20",
+        "RoadCategory": "C",
+        "RoadName": "GRANGE ROAD",
+        "SpeedBand": 3
+    },
+    {
+        "LinkID": "104002164",
+        "Location": "1.300896354380521 103.83653845351117 1.3006898519373482 103.8363661661832",
+        "MaximumSpeed": "39",
+        "MinimumSpeed": "30",
+        "RoadCategory": "C",
+        "RoadName": "GRANGE ROAD",
+        "SpeedBand": 4
+    },
+    {
+        "LinkID": "104005090",
+        "Location": "1.3052352879030098 103.83703400759208 1.3056422514706816 103.83740378723826",
+        "MaximumSpeed": "29",
+        "MinimumSpeed": "20",
+        "RoadCategory": "C",
+        "RoadName": "CAIRNHILL ROAD",
+        "SpeedBand": 3
+    },
+    {
+        "LinkID": "104005091",
+        "Location": "1.3056422514706816 103.83740378723826 1.3052352879030098 103.83703400759208",
+        "MaximumSpeed": "29",
+        "MinimumSpeed": "20",
+        "RoadCategory": "C",
+        "RoadName": "CAIRNHILL ROAD",
+        "SpeedBand": 3
+    },
+    {
+        "LinkID": "107000872",
+        "Location": "1.3003491337712214 103.83501238173247 1.300445096042101 103.83481898791881",
+        "MaximumSpeed": "39",
+        "MinimumSpeed": "30",
+        "RoadCategory": "C",
+        "RoadName": "ORCHARD BOULEVARD",
+        "SpeedBand": 4
+    },
+    {
+        "LinkID": "107001232",
+        "Location": "1.3008190398333452 103.83683805537352 1.3006898519373482 103.8363661661832",
+        "MaximumSpeed": "19",
+        "MinimumSpeed": "10",
+        "RoadCategory": "C",
+        "RoadName": "SOMERSET ROAD",
+        "SpeedBand": 2
+    },
+    {
+        "LinkID": "108001560",
+        "Location": "1.3006898519373482 103.8363661661832 1.300427116194058 103.83609093250057",
+        "MaximumSpeed": "39",
+        "MinimumSpeed": "30",
+        "RoadCategory": "C",
+        "RoadName": "GRANGE ROAD",
+        "SpeedBand": 4
+    },
+    {
+        "LinkID": "108002604",
+        "Location": "1.3008190398333452 103.83683805537352 1.300896354380521 103.83653845351117",
+        "MaximumSpeed": "29",
+        "MinimumSpeed": "20",
+        "RoadCategory": "C",
+        "RoadName": "SOMERSET ROAD",
+        "SpeedBand": 3
+    },
+    {
+        "LinkID": "108003594",
+        "Location": "1.3056422514706816 103.83740378723826 1.305691087013594 103.83749729910596",
+        "MaximumSpeed": "29",
+        "MinimumSpeed": "20",
+        "RoadCategory": "C",
+        "RoadName": "CAIRNHILL ROAD",
+        "SpeedBand": 3
+    },
+    {
+        "LinkID": "108003595",
+        "Location": "1.305691087013594 103.83749729910596 1.3056422514706816 103.83740378723826",
+        "MaximumSpeed": "29",
+        "MinimumSpeed": "20",
+        "RoadCategory": "C",
+        "RoadName": "CAIRNHILL ROAD",
+        "SpeedBand": 3
+    },
+    {
+        "LinkID": "116000660",
+        "Location": "1.3008190398333452 103.83683805537352 1.3019258817670438 103.83754619177634",
+        "MaximumSpeed": "29",
+        "MinimumSpeed": "20",
+        "RoadCategory": "C",
+        "RoadName": "GRANGE ROAD",
+        "SpeedBand": 3
+    },
+    {
+        "LinkID": "116000664",
+        "Location": "1.3016262140704933 103.83548254655578 1.3024110486492908 103.83582255697608",
+        "MaximumSpeed": "29",
+        "MinimumSpeed": "20",
+        "RoadCategory": "C",
+        "RoadName": "ORCHARD LINK",
+        "SpeedBand": 3
+    },
+    {
+        "LinkID": "116001108",
+        "Location": "1.300427116194058 103.83609093250057 1.300894140137005 103.83506536931073",
+        "MaximumSpeed": "39",
+        "MinimumSpeed": "30",
+        "RoadCategory": "C",
+        "RoadName": "GRANGE ROAD",
+        "SpeedBand": 4
+    },
+    {
+        "LinkID": "116001284",
+        "Location": "1.3024110486492908 103.83582255697608 1.3027264094900806 103.83601886262524",
+        "MaximumSpeed": "29",
+        "MinimumSpeed": "20",
+        "RoadCategory": "C",
+        "RoadName": "ORCHARD LINK",
+        "SpeedBand": 3
+    },
+    {
+        "LinkID": "116001312",
+        "Location": "1.301457025580636 103.8353929164961 1.3016262140704933 103.83548254655578",
+        "MaximumSpeed": "39",
+        "MinimumSpeed": "30",
+        "RoadCategory": "C",
+        "RoadName": "ORCHARD LINK",
+        "SpeedBand": 4
+    },
+    {
+        "LinkID": "116001332",
+        "Location": "1.3024110486492908 103.83582255697608 1.302827363907628 103.8358484804371",
+        "MaximumSpeed": "29",
+        "MinimumSpeed": "20",
+        "RoadCategory": "C",
+        "RoadName": "ORCHARD LINK",
+        "SpeedBand": 3
+    },
+    {
+        "LinkID": "116001372",
+        "Location": "1.301338273505198 103.83531169687328 1.301457025580636 103.8353929164961",
+        "MaximumSpeed": "49",
+        "MinimumSpeed": "40",
+        "RoadCategory": "C",
+        "RoadName": "ORCHARD LINK",
+        "SpeedBand": 5
+    }
+]
