@@ -134,7 +134,7 @@ def app():
                         plt.savefig("current.png")
                     
                     timestep_speedbands = results.reshape(results.shape[2], results.shape[1])
-                    plotGeoPerformance(metadata, timestep_speedbands[num_output_timesteps])
+                    plotGeoPerformance(metadata, timestep_speedbands[num_output_timesteps-1])
 
                     st.write("Here are the prediction results")
                     st.image("current.pngS")
