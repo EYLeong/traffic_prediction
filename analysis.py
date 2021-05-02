@@ -61,7 +61,7 @@ def plot_geo_performance(metadata, rmses):
     ax.set_xlabel("Longitude")
     ax.set_ylabel("Latitude")
     ctx.add_basemap(ax)
-    fig.show()
+    plt.show()
     
 def plot_pred_actual(predicted, actual, idx, ts):
     '''
@@ -83,7 +83,7 @@ def plot_pred_actual(predicted, actual, idx, ts):
     ax.set_xlabel("Timestep")
     ax.legend()
     ax.set_title("{} minutes".format((ts+1) * 5))
-    fig.show()
+    plt.show()
     
 def rmse_per_time(predicted, actual, timestamps, timeidx = 0):
     '''
@@ -138,4 +138,4 @@ def plot_rmse_time(rmses, xlabel="Time Period"):
     ax.set_ylabel("RMSE")
     ax.set_xlabel(xlabel)
     ax.set_title("RMSE against "+xlabel)
-    fig.show()
+    plt.show()
